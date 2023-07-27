@@ -15,5 +15,8 @@
   "bugs": {
     "url": "https://github.com/Sibisov-Artem/movies-explorer-api/issues"
   },
-  "homepage": "https://github.com/Sibisov-Artem/movies-explorer-api#readme"
+  "homepage": "https://github.com/Sibisov-Artem/movies-explorer-api#readme",
+  "dependencies": {
+    "eslint": "^8.45.0"
+  }
 }
