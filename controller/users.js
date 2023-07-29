@@ -43,15 +43,15 @@ const login = (req, res) => {
   if (!email || !password) {
     res.status(400).send({ message: 'Не передан email или пароль' });
   }
-  User.findOne({ email })
+  User.findOne({ email }).select('+password')
     .then((user) => {
       if (!user) {
-        res.status(401).send({ message: 'Неправильные почта или пароль' });
+        return res.status(401).send({ message: 'Неправильные почта или пароль' });
       }
       bcrypt.compare(password, user.password)
         .then((matched) => {
           if (!matched) {
-            res.status(401).send({ message: 'Неправильные почта или пароль' });
+            return res.status(401).send({ message: 'Неправильные почта или пароль' });
           }
           const token = jwt.sign({ _id: user._id }, 'strong-secret-key', { expiresIn: '7d' });
           res.send({ token });
