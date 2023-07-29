@@ -26,9 +26,13 @@ const updateUserInfoById = (req, res) => {
 const createUser = (req, res) => {
   const { name, email, password } = req.body;
 
-  bcrypt.hash(password, 1)
+  bcrypt.hash(password, 10)
     .then((hash) => User.create({ name, email, password: hash }))
-    .then((user) => res.send({ data: user }))
+    .then((user) => res.send({
+      name: user.name,
+      email: user.email,
+      _id: user._id,
+    }))
     .catch((err) => res.status(500).send({ message: err.message }));
 };
 
