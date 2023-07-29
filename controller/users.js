@@ -24,9 +24,9 @@ const updateUserInfoById = (req, res) => {
 // создаёт пользователя с переданными в теле
 // email, password и name
 const createUser = (req, res) => {
-  const { name, email } = req.body;
+  const { name, email, password } = req.body;
 
-  User.create({ name, email })
+  User.create({ name, email, password })
     .then((user) => res.send({ data: user }))
     .catch((err) => res.status(500).send({ message: err.message }));
 };
