@@ -1,9 +1,9 @@
 const router = require('express').Router();
 const userRoutes = require('./users');
 const movieRoutes = require('./movies');
-const AuthRoutes = require('./authentication');
+const authRoutes = require('./authentication');
 
-router.use(AuthRoutes);
+router.use(authRoutes);
 router.use('/users', userRoutes);
 router.use('/movies', movieRoutes);
 
