@@ -4,6 +4,7 @@ const mongoose = require('mongoose');
 const router = require('./routes/index');
 const bodyParser = require('body-parser');
 
+const auth = require('./middlewares/auth');
 
 const { PORT = 3000, DB_URL = 'mongodb://127.0.0.1:27017/bitfilmsdb' } = process.env;
 
@@ -16,12 +17,8 @@ mongoose.connect(DB_URL, {
 
 app.use(bodyParser.json());
 
-app.use((req, res, next) => {
-  req.user = {
-    _id: '64c53601db36345167ac0fd5',
-  };
-  next();
-});
+app.use(auth);
+
 app.use(router);
 
 app.listen(PORT, () => {
