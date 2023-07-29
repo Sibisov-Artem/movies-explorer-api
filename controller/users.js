@@ -26,7 +26,8 @@ const updateUserInfoById = (req, res) => {
 const createUser = (req, res) => {
   const { name, email, password } = req.body;
 
-  User.create({ name, email, password })
+  bcrypt.hash(password, 1)
+    .then((hash) => User.create({ name, email, password: hash }))
     .then((user) => res.send({ data: user }))
     .catch((err) => res.status(500).send({ message: err.message }));
 };
