@@ -7,7 +7,7 @@ router.get('/', getMovies);
 // создаёт фильм
 router.post('/', createMovie);
 
-//удаляет сохранённый фильм по id
+// удаляет сохранённый фильм по id
 router.delete('/_id', deleteMovie);
 
 module.exports = router;

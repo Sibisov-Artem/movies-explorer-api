@@ -1,5 +1,5 @@
 const router = require('express').Router();
-const { getCurrentUser, updateUserInfoById, } = require('../controllers/users');
+const { getCurrentUser, updateUserInfoById } = require('../controller/users');
 
 // возвращает информацию о пользователе (email и имя)
 router.get('/me', getCurrentUser);

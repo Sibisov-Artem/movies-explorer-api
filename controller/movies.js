@@ -1,4 +1,4 @@
-const Movie = require('../models/movies');
+const Movie = require('../models/movie');
 
 // возвращает все сохранённые текущим пользователем фильмы
 const getMovies = (req, res) => {
@@ -8,24 +8,31 @@ const getMovies = (req, res) => {
 };
 
 // создаёт фильм с переданными в теле
-// country, director, duration, year, description, image, trailer, nameRU, nameEN и thumbnail, movieId
+// country, director, duration, year,
+// description, image, trailer, nameRU, nameEN и thumbnail, movieId
 const createMovie = (req, res) => {
   console.log(req.body);
-  const { country,
+  const {
+    country,
     director, duration,
     year, description,
     image, trailer,
     nameRU, nameEN,
-    thumbnail, movieId
+    thumbnail, movieId,
   } = req.body;
   Movie.create({
-    country, director,
-    duration, year,
-    description, image,
-    trailer, nameRU,
-    nameEN, thumbnail,
+    country,
+    director,
+    duration,
+    year,
+    description,
+    image,
+    trailer,
+    nameRU,
+    nameEN,
+    thumbnail,
     movieId,
-    owner: req.user._id
+    owner: req.user._id,
   })
     .then((movie) => res.send({ data: movie }))
     .catch((err) => res.status(500).send({ message: err.message }));
