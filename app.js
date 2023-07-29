@@ -15,6 +15,13 @@ mongoose.connect(DB_URL, {
 });
 
 app.use(bodyParser.json());
+
+app.use((req, res, next) => {
+  req.user = {
+    _id: '64c53601db36345167ac0fd5',
+  };
+  next();
+});
 app.use(router);
 
 app.listen(PORT, () => {
