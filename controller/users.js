@@ -20,7 +20,7 @@ const updateUserInfoById = (req, res, next) => {
   const userId = req.user._id;
   const { name, email } = req.body;
 
-  User.findByIdAndUpdate(userId, { name, email })
+  User.findByIdAndUpdate(userId, { name, email }, { new: true, runValidators: true })
     .then((user) => {
       if (!user) {
         next(new NotFoundError(' Пользователь с указанным _id не найден.'));
