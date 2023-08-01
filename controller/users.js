@@ -80,7 +80,7 @@ const login = (req, res, next) => {
             next(new UnauthorizedError('Неправильные почта или пароль'));
             return;
           }
-          const token = jwt.sign({ _id: user._id }, 'strong-secret-key', { expiresIn: '7d' });
+          const token = jwt.sign({ _id: user._id }, process.env.NODE_ENV !== 'production' ? 'strong-secret-key' : process.env.JWT_SECRET, { expiresIn: '7d' });
           res.send({ token });
         });
     })

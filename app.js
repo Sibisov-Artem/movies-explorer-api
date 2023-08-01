@@ -27,4 +27,6 @@ app.use(errorHandler);
 
 app.listen(PORT, () => {
   console.log(`Приложение слушает следующий порт: ${PORT}`);
+  console.log(process.env.NODE_ENV);
+  console.log(process.env.JWT_SECRET);
 });
