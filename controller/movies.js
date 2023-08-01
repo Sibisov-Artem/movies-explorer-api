@@ -15,7 +15,6 @@ const getMovies = (req, res, next) => {
 // country, director, duration, year,
 // description, image, trailer, nameRU, nameEN и thumbnail, movieId
 const createMovie = (req, res, next) => {
-  console.log(req.body);
   const {
     country,
     director, duration,

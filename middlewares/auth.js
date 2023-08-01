@@ -2,9 +2,9 @@ const jwt = require('jsonwebtoken');
 
 module.exports = (req, res, next) => {
   const { authorization } = req.headers;
-  console.log(`Здесь ${authorization}`);
   if (!authorization) {
-    return res.status(401).send({ message: 'Необходима авторизация' });
+    res.status(401).send({ message: 'Необходима авторизация' });
+    return;
   }
   const token = authorization.replace('Bearer ', '');
   let payload;
@@ -12,10 +12,9 @@ module.exports = (req, res, next) => {
     // верифицируем токен
     payload = jwt.verify(token, process.env.NODE_ENV !== 'production' ? 'strong-secret-key' : process.env.JWT_SECRET);
   } catch (err) {
-    return res.status(401).send({ message: 'Необходима авторизация' });
+    res.status(401).send({ message: 'Необходима авторизация' });
+    return;
   }
   req.user = payload; // записываем пейлоуд в объект запроса
-  console.log(JSON.stringify(payload));
-
   next();
 };
