@@ -2,6 +2,7 @@ const router = require('express').Router();
 const { celebrate, Joi } = require('celebrate');
 
 const { getMovies, createMovie, deleteMovie } = require('../controller/movies');
+const regularHttp = require('../utils/regularHttp');
 
 // возвращает все сохранённые текущим пользователем фильмы
 router.get('/', getMovies);
@@ -14,11 +15,11 @@ router.post('/', celebrate({
     duration: Joi.number().required(),
     year: Joi.string().required(),
     description: Joi.string().required(),
-    image: Joi.string().required().regex(/https?:\/\/[\w\d\-._~:/?#[\]@!$&'()*+,;=]*/),
-    trailerLink: Joi.string().required().regex(/https?:\/\/[\w\d\-._~:/?#[\]@!$&'()*+,;=]*/),
+    image: Joi.string().required().regex(regularHttp),
+    trailerLink: Joi.string().required().regex(regularHttp),
     nameRU: Joi.string().required(),
     nameEN: Joi.string().required(),
-    thumbnail: Joi.string().required().regex(/https?:\/\/[\w\d\-._~:/?#[\]@!$&'()*+,;=]*/),
+    thumbnail: Joi.string().required().regex(regularHttp),
     movieId: Joi.number().required(),
   }),
 }), createMovie);
