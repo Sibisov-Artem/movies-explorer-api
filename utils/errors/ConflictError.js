@@ -1,6 +1,8 @@
+const MESSAGE_ERROR_CONFLICT_DEFAULT = require('../constants');
+
 class ConflictError extends Error {
   constructor(message) {
-    super(message || 'Конфликт данных');
+    super(message || MESSAGE_ERROR_CONFLICT_DEFAULT);
     this.statusCode = 409;
   }
 }

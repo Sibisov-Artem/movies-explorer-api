@@ -8,6 +8,14 @@ const NotFoundError = require('../utils/errors/NotFoundError'); // 404
 const UnauthorizedError = require('../utils/errors/UnauthorizedError'); // 401
 const ConflictError = require('../utils/errors/ConflictError'); // 409
 
+const {
+  MESSAGE_ERROR_NOT_FOUND_UPDATE_USER_INFO_BY_ID,
+  MESSAGE_ERROR_BAD_REQUEST_UPDATE_USER_INFO_BY_ID,
+  MESSAGE_ERROR_BAD_REQUEST_CREATE_USER,
+  MESSAGE_ERROR_CONFLICT__CREATE_USER,
+  MESSAGE_ERROR_UNAUTHORIZED_LOGIN
+} = require('../utils/constants');
+
 // возвращает информацию о пользователе (email и имя)
 const getCurrentUser = (req, res, next) => {
   User.findById(req.user._id)
@@ -23,14 +31,14 @@ const updateUserInfoById = (req, res, next) => {
   User.findByIdAndUpdate(userId, { name, email }, { new: true, runValidators: true })
     .then((user) => {
       if (!user) {
-        next(new NotFoundError(' Пользователь с указанным _id не найден.'));
+        next(new NotFoundError(MESSAGE_ERROR_NOT_FOUND_UPDATE_USER_INFO_BY_ID));
         return;
       }
       res.send({ data: user });
     })
     .catch((err) => {
       if (err.name === 'ValidationError') {
-        next(new BadRequestError('Переданы некорректные данные при обновлении пользователя.'));
+        next(new BadRequestError(MESSAGE_ERROR_BAD_REQUEST_UPDATE_USER_INFO_BY_ID));
       } else {
         next(err);
       }
@@ -52,9 +60,9 @@ const createUser = (req, res, next) => {
     }))
     .catch((err) => {
       if (err.name === 'ValidationError') {
-        next(new BadRequestError('Переданы некорректные данные при создании пользователя.'));
+        next(new BadRequestError(MESSAGE_ERROR_BAD_REQUEST_CREATE_USER));
       } else if (err.code === 11000) {
-        next(new ConflictError('Конфликт данных. Этот адрес почты уже занят'));
+        next(new ConflictError(MESSAGE_ERROR_CONFLICT__CREATE_USER));
       } else {
         next(err);
       }
@@ -65,19 +73,16 @@ const createUser = (req, res, next) => {
 // и возвращает JWT
 const login = (req, res, next) => {
   const { email, password } = req.body;
-  // if (!email || !password) {
-  //   res.status(400).send({ message: 'Не передан email или пароль' });
-  // }
   User.findOne({ email }).select('+password')
     .then((user) => {
       if (!user) {
-        next(new UnauthorizedError('Неправильные почта или пароль'));
+        next(new UnauthorizedError(MESSAGE_ERROR_UNAUTHORIZED_LOGIN));
         return;
       }
       bcrypt.compare(password, user.password)
         .then((matched) => {
           if (!matched) {
-            next(new UnauthorizedError('Неправильные почта или пароль'));
+            next(new UnauthorizedError(MESSAGE_ERROR_UNAUTHORIZED_LOGIN));
             return;
           }
           const token = jwt.sign({ _id: user._id }, process.env.NODE_ENV !== 'production' ? 'strong-secret-key' : process.env.JWT_SECRET, { expiresIn: '7d' });
