@@ -18,8 +18,6 @@ app.use(helmet());
 
 app.use(cors());
 
-app.use(limiter);
-
 mongoose.connect(DB_URL, {
 }).then(() => {
   console.log('connected to DB');
@@ -28,6 +26,8 @@ mongoose.connect(DB_URL, {
 app.use(express.json());
 
 app.use(requestLogger);
+
+app.use(limiter);
 
 app.use(router);
 
