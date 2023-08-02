@@ -33,4 +33,6 @@ module.exports.MESSAGE_ERROR_UNAUTHORIZED_DEFAULT = 'Ошибка авториз
 
 module.exports.MESSAGE_ERROR_UNAUTHORIZED_LOGIN = 'Неправильные почта или пароль';
 
+module.exports.MESSAGE_ERROR_UNAUTHORIZED_AUTHORIZATION = 'Необходима авторизация';
+
 // ------------------------------------------------------------------
