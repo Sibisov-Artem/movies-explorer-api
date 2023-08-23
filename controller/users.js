@@ -34,7 +34,7 @@ const updateUserInfoById = (req, res, next) => {
         next(new NotFoundError(MESSAGE_ERROR_NOT_FOUND_UPDATE_USER_INFO_BY_ID));
         return;
       }
-      res.send({ data: user });
+      res.send(user);
     })
     .catch((err) => {
       if (err.name === 'ValidationError') {

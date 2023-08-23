@@ -14,7 +14,7 @@ const {
 // возвращает все сохранённые текущим пользователем фильмы
 const getMovies = (req, res, next) => {
   Movie.find({ owner: req.user._id })
-    .then((movies) => res.send({ data: movies }))
+    .then((movies) => res.send(movies))
     .catch(next);
 };
 
@@ -44,7 +44,7 @@ const createMovie = (req, res, next) => {
     movieId,
     owner: req.user._id,
   })
-    .then((movie) => res.status(201).send({ data: movie }))
+    .then((movie) => res.status(201).send(movie))
     .catch((err) => {
       if (err.name === 'ValidationError') {
         next(new BadRequestError(MESSAGE_ERROR_BAD_REQUEST_CREATE_MOVIE));
@@ -67,7 +67,7 @@ const deleteMovie = (req, res, next) => {
       }
       return movie.deleteOne()
         .then((movieDelete) => {
-          res.send({ data: movieDelete });
+          res.send(movieDelete);
         });
     })
     .catch((err) => {
