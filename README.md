@@ -34,7 +34,7 @@ Movies-explorer-api - серверное приложение предназна
 
 Запустить сервер: `npm run start`
 
-Frontend проекта располагается [тут](https://github.com/Sibisov-Artem/movies-explorer-frontend).
+Frontend проекта располагается [здесь](https://github.com/Sibisov-Artem/movies-explorer-frontend).
 
 ## *🛠 Стек*
 
